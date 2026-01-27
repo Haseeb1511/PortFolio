@@ -1,0 +1,277 @@
+/* ----- POPPINS FONT Link ----- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* ----- VARIABLES ----- */
+:root {
+  /* Light theme (default) */
+  --body-color: #ffffff;
+  --color-white: #ffffff;
+
+  /* Text colors - High contrast for accessibility */
+  --text-color-second: #0f172a;
+  --text-color-third: #475569;
+
+  /* Accent colors */
+  --first-color: #0ea5e9;
+  --first-color-hover: #0284c7;
+  --accent-orange: #f97316;
+
+  /* Background colors */
+  --second-color: #f8fafc;
+  --third-color: #e0f2fe;
+
+  /* Shadows and borders */
+  --first-shadow-color: rgba(0, 0, 0, 0.08);
+  --border-color: #e2e8f0;
+
+  /* Semantic aliases */
+  --bg: var(--body-color);
+  --text: var(--text-color-second);
+  --muted-text: var(--text-color-third);
+  --card-bg: var(--second-color);
+  --card-text: #0f172a;
+  --on-accent: #ffffff;
+  --chip-text: var(--text);
+}
+
+/* Dark theme variables */
+body.dark {
+  --body-color: #0f172a;
+  --color-white: #1e293b;
+
+  /* Text colors */
+  --text-color-second: #f1f5f9;
+  --text-color-third: #cbd5e1;
+
+  /* Accent colors - Brighter for dark mode */
+  --first-color: #38bdf8;
+  --first-color-hover: #0ea5e9;
+  --accent-orange: #fb923c;
+
+  /* Background colors */
+  --second-color: #1e293b;
+  --third-color: #334155;
+
+  /* Shadows and borders */
+  --first-shadow-color: rgba(0, 0, 0, 0.3);
+  --border-color: #334155;
+
+  /* Semantic aliases */
+  --bg: var(--body-color);
+  --text: var(--text-color-second);
+  --muted-text: var(--text-color-third);
+  --card-bg: var(--second-color);
+  --card-text: #f1f5f9;
+  --on-accent: #ffffff;
+  --chip-text: var(--on-accent);
+}
+
+/* ----- BASE ----- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--body-color);
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+}
+
+/* Layout structure */
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  margin-top: 80px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  border-radius: 25px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--second-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted-text);
+  border-radius: 30px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--first-color);
+}
+
+/* Selection */
+::selection {
+  color: #fff;
+  background-color: var(--first-color);
+}
+
+/* Base container */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Section styles */
+.section {
+  padding: 80px 0;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.section-subtitle {
+  font-size: 1rem;
+  color: var(--muted-text);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/* Buttons */
+.btn {
+  font-weight: 500;
+  padding: 12px 24px;
+  background: var(--card-bg);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+}
+
+.btn:hover {
+  background: var(--first-color-hover);
+  color: var(--on-accent);
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: var(--first-color);
+  color: var(--on-accent);
+}
+
+.btn-primary:hover {
+  background: var(--first-color-hover);
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Utility classes */
+.text-center {
+  text-align: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid {
+  display: grid;
+}
+
+/* Icon styles */
+.icon-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  box-shadow: 0 2px 5px var(--first-shadow-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.icon-box:hover {
+  color: var(--first-color);
+  transform: translateY(-3px);
+}
+
+/* Card styles */
+.card {
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 10px 30px var(--first-shadow-color);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Tool/Tech badges */
+.tools-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.tool-badge {
+  background: var(--first-color);
+  color: var(--on-accent);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.tool-badge:hover {
+  background: var(--first-color-hover);
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section {
+    padding: 60px 0;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .container {
+    padding: 0 15px;
+  }
+}

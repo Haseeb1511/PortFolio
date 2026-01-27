@@ -1,0 +1,162 @@
+// Projects data with tools/technologies and multiple images
+const projects = [
+  {
+    id: "transformer-scratch",
+    title: "Pre-Trained Encoder-Decoder Transformer From Scratch",
+    description: "Built a complete transformer architecture from scratch using PyTorch, implementing attention mechanisms and training loops for sequence-to-sequence tasks.",
+    fullDescription: `A complete implementation of the Transformer architecture from scratch using PyTorch. This project demonstrates deep understanding of attention mechanisms, positional encoding, and the encoder-decoder structure that powers modern large language models.
+
+Key Features:
+- Multi-Head Self-Attention: Implemented the core attention mechanism
+- Positional Encoding: Added sinusoidal positional encodings
+- Encoder-Decoder Architecture: Built both stacks with proper masking
+- Training Pipeline: Complete training loops with learning rate scheduling`,
+    images: [
+      "/assets/projects/llm/cover.jpg",
+      "/assets/projects/llm/0.png",
+      "/assets/projects/llm/output.png",
+      "/assets/projects/llm/encoder.png",
+      "/assets/projects/llm/decoder.png",
+      "/assets/projects/llm/4.png",
+      "/assets/projects/llm/5.png",
+    ],
+    tools: ["PyTorch", "Python", "NumPy", "Matplotlib"],
+    github: "https://github.com/Haseeb1511/LLMs-From-Scratc.git",
+    liveDemo: null,
+    featured: true,
+    date: "2024-12-01"
+  },
+  {
+    id: "agentic-rag",
+    title: "Agentic RAG (Memory + Persistence)",
+    description: "Developed an intelligent RAG system with conversation memory and persistent storage using LangGraph, enabling contextual multi-turn conversations.",
+    fullDescription: `An intelligent RAG (Retrieval Augmented Generation) system built with LangGraph that maintains conversation memory and persistent storage. This enables contextual multi-turn conversations where the system remembers previous interactions.
+
+Key Features:
+- Conversation Memory: Maintains context across multiple turns
+- Persistent Storage: SQLite-based storage for conversation history
+- Agentic Architecture: Uses LangGraph for intelligent workflow management
+- Docker Deployment: Containerized with Docker Compose`,
+    images: [
+      "/assets/projects/agentic-rag/cover.png",
+      "/assets/projects/agentic-rag/2.png"
+    ],
+    tools: ["FastAPI", "Streamlit", "LangGraph", "Docker-Compose", "SQLite", "Memory"],
+    github: "https://github.com/Haseeb1511/Agentic-RAG-LangGraph.git",
+    liveDemo: null,
+    featured: true,
+    date: "2024-11-15"
+  },
+  {
+    id: "imdb-sentiment",
+    title: "IMDB Review Sentiment Analysis (End-to-End)",
+    description: "Complete MLOps pipeline for sentiment analysis with automated deployment, monitoring, and CI/CD. Deployed on AWS with full MLflow experiment tracking.",
+    fullDescription: `A complete end-to-end machine learning pipeline for sentiment analysis of IMDB movie reviews. This project showcases full MLOps implementation from data preprocessing to cloud deployment.
+
+Key Features:
+- Full MLOps Pipeline: Data preprocessing to deployment
+- MLflow Integration: Complete experiment tracking and model registry
+- CI/CD Pipeline: Automated with GitHub Actions
+- AWS Deployment: EC2, ECR, and S3 integration`,
+    images: [
+      "/assets/projects/imdb-sentiment/cover.png"
+    ],
+    tools: ["FastAPI", "Streamlit", "Docker-Compose", "GitHub Actions (CI/CD)", "MLflow", "S3 Storage", "AWS (EC2, ECR)"],
+    github: "https://github.com/Haseeb1511/IMDB-Movie-Review-Sentiment-Anaysis-End-to-End.git",
+    liveDemo: null,
+    featured: true,
+    date: "2024-10-20"
+  },
+  {
+    id: "trip-planner",
+    title: "Trip Organizer AI Agent (End-to-End)",
+    description: "AI-powered trip planning agent with full deployment pipeline, MongoDB persistence, and interactive web interface for personalized itinerary generation.",
+    fullDescription: `An AI-powered trip planning agent that generates personalized travel itineraries. Features a full deployment pipeline with MongoDB for persistent storage and an interactive web interface.
+
+Key Features:
+- AI-Powered Planning: Intelligent itinerary generation
+- MongoDB Persistence: Atlas-based storage
+- Interactive UI: User-friendly web interface
+- Cloud Deployment: AWS EC2 and ECR`,
+    images: [
+      "/assets/projects/trip-planner/cover.png",
+      "/assets/projects/trip-planner/2.png",
+      "/assets/projects/trip-planner/3.png",
+      "/assets/projects/trip-planner/4.png"
+    ],
+    tools: ["FastAPI", "HTML", "CSS", "Docker", "S3 Storage", "GitHub Actions (CI/CD)", "AWS (EC2, ECR)", "MongoDB Atlas"],
+    github: "https://github.com/Haseeb1511/End-to-End-Trip-Planer-AI-Agent.git",
+    liveDemo: null,
+    featured: false,
+    date: "2024-09-10"
+  },
+  {
+    id: "medical-chatbot",
+    title: "RAG-Based Custom Medical Chatbot (Multimodal)",
+    description: "Multimodal medical chatbot leveraging RAG architecture to provide accurate health information from multiple medical knowledge bases.",
+    fullDescription: `A multimodal medical chatbot that uses RAG architecture to retrieve accurate health information from multiple medical knowledge bases. Supports both text and image inputs for comprehensive medical queries.
+
+Key Features:
+- Multimodal Input: Text and image support
+- RAG Architecture: Accurate information retrieval
+- Multiple Knowledge Bases: Comprehensive medical data
+- Streamlit Interface: User-friendly chat interface`,
+    images: [
+      "/assets/projects/medical-chatbot/cover.png"
+    ],
+    tools: ["LangChain", "Streamlit", "Python"],
+    github: "https://github.com/Haseeb1511/MedBot_RAG-Powered-multmodel-multidomain-.git",
+    liveDemo: null,
+    featured: false,
+    date: "2024-08-15"
+  },
+  {
+    id: "ai-lawyer",
+    title: "AI Lawyer Chatbot (RAG-Based)",
+    description: "Intelligent legal assistant using RAG with CrossEncoder re-ranking for precise legal query responses and document retrieval.",
+    fullDescription: `An intelligent legal assistant chatbot using RAG architecture with CrossEncoder re-ranking for precise legal query responses. The system retrieves relevant legal documents and provides accurate answers.
+
+Key Features:
+- CrossEncoder Re-ranking: Improved retrieval precision
+- Legal Document Retrieval: Accurate legal information
+- RAG Architecture: Context-aware responses
+- Streamlit Interface: Easy-to-use chat UI`,
+    images: [
+      "/assets/projects/ai-lawyer/cover.png",
+      "/assets/projects/ai-lawyer/2.png",
+      "/assets/projects/ai-lawyer/3.png"
+    ],
+    tools: ["Streamlit", "LangChain", "CrossEncoder (Re-Ranking)", "Python"],
+    github: "https://github.com/Haseeb1511/AI_lawyer_chatbot.git",
+    liveDemo: null,
+    featured: false,
+    date: "2024-07-20"
+  },
+  {
+    id: "youtube-rag",
+    title: "RAG-Powered YouTube Video Chatbot",
+    description: "Interactive chatbot that processes YouTube videos, extracts insights using FAISS vector search, and enables Q&A on video content.",
+    fullDescription: `An interactive chatbot that processes YouTube videos and enables question-answering on video content. Uses FAISS for efficient vector search and retrieval.
+
+Key Features:
+- YouTube Video Processing: Automatic transcript extraction
+- FAISS Vector Search: Efficient similarity search
+- Interactive Q&A: Ask questions about video content
+- Streamlit Interface: Simple and intuitive UI`,
+    images: [
+      "/assets/projects/youtube-rag/cover.png",
+      "/assets/projects/youtube-rag/2.png"
+    ],
+    tools: ["Streamlit", "LangChain", "FAISS", "Python"],
+    github: "https://github.com/Haseeb1511/RAG_Powered_YT_VIDEO_Q-A.git",
+    liveDemo: null,
+    featured: false,
+    date: "2024-06-25"
+  }
+];
+
+export const getFeaturedProjects = () => projects.filter(p => p.featured);
+export const getAllProjects = () => projects;
+export const getProjectById = (id) => projects.find(p => p.id === id);
+
+export default projects;

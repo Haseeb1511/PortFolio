@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: "fastapi-backend"
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+          - fastapi:8000
+
+
+# refresh ecerry 5s
+# fastapi-backend ===> it is docker service name (named during docker creation)

@@ -1,0 +1,26 @@
+langchain
+langchain-openai
+
+langchain-text-splitters
+ipykernel
+python-dotenv
+
+langgraph
+langgraph-checkpoint-postgres
+
+
+supabase
+sqlalchemy
+psycopg2-binary
+
+langchain-postgres
+pgvector
+
+
+# backend
+fastapi
+pydantic
+uvicorn
+python-multipart
+# for prometeus
+prometheus-fastapi-instrumentator

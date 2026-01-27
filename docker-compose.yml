@@ -1,0 +1,50 @@
+services:
+  fastapi:
+    build:
+      context: .                  # start building from project root
+      dockerfile: backend/Dockerfile
+    container_name: fastapi
+    env_file:   # env file
+      - .env
+    ports:
+      - "8000:8000"
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus   #  persistent storage so visalizaiton stay their even after restart
+    ports:
+      - "9090:9090"
+    depends_on:
+      - fastapi
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+
+volumes:
+  prometheus_data:
+
+
+#PROMETEUS
+# docker compose up --build
+# verify prometheus local:
+#http://localhost:9090  #prometeus
+
+
+
+# GRAFANA
+# http://localhost:3000
+# user: admin
+# pass: admin
+
+
+# if port 3000 is not free
+# run this in temninall in admin mode
+# taskkill /PID 11348 /F

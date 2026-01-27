@@ -1,0 +1,199 @@
+.project-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px var(--first-shadow-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px var(--first-shadow-color);
+}
+
+.project-card.landscape {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Image Container */
+.project-image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--third-color);
+}
+
+.project-image-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.project-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-image {
+    transform: scale(1.05);
+}
+
+/* Carousel Controls */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.project-card:hover .carousel-btn {
+    opacity: 1;
+}
+
+.carousel-btn:hover {
+    background: var(--first-color);
+}
+
+.carousel-btn.prev {
+    left: 15px;
+}
+
+.carousel-btn.next {
+    right: 15px;
+}
+
+.carousel-dots {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    background: var(--first-color);
+    transform: scale(1.2);
+}
+
+/* Content */
+.project-content {
+    padding: 24px;
+}
+
+.project-title-link {
+    text-decoration: none;
+}
+
+.project-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 12px;
+    line-height: 1.3;
+    transition: color 0.3s ease;
+}
+
+.project-title:hover {
+    color: var(--first-color);
+}
+
+.project-description {
+    font-size: 0.95rem;
+    color: var(--muted-text);
+    line-height: 1.7;
+    margin-bottom: 16px;
+}
+
+/* Tools */
+.tools-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.tool-badge {
+    background: var(--first-color);
+    color: var(--on-accent);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.tool-badge:hover {
+    background: var(--first-color-hover);
+    transform: translateY(-2px);
+}
+
+/* Actions */
+.project-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.project-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+}
+
+/* Grid Layout for Multiple Cards */
+.projects-grid {
+    display: grid;
+    gap: 30px;
+}
+
+.projects-grid.landscape {
+    grid-template-columns: 1fr;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .project-content {
+        padding: 20px;
+    }
+
+    .project-title {
+        font-size: 1.2rem;
+    }
+
+    .project-actions {
+        flex-direction: column;
+    }
+
+    .project-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

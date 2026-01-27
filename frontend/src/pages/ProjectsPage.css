@@ -1,0 +1,18 @@
+.projects-page {
+    padding-top: 100px;
+}
+
+.section-subtitle-light {
+    text-align: center;
+    color: var(--muted-text);
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+.projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+}
