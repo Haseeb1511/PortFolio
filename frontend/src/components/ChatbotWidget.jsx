@@ -166,7 +166,7 @@ const ChatbotWidget = () => {
     let botMessage = "";
     let buffer = "";
     let botMessageIndexRef = null;
-    let botMessageCreated = false; // Track if we've created the bot message
+    let botMessageCreated = false;
 
     try {
       const response = await fetch("http://localhost:8000/chat/audio", {
@@ -196,25 +196,18 @@ const ChatbotWidget = () => {
           try {
             const data = JSON.parse(trimmedLine.replace(/^data:\s*/, ""));
 
-            // Handle transcription
             if (data.type === "transcription") {
               transcriptionText = data.text;
-
-              // Add user message with transcription
               setMessages((prev) => {
                 const newMessages = [...prev, { from: "user", text: transcriptionText }];
-                // Store the index where bot message will be added
                 botMessageIndexRef = newMessages.length;
                 return newMessages;
               });
             }
 
-            // Handle bot tokens
             else if (data.type === "token") {
-              // Create empty bot message on first token if not already created
               if (!botMessageCreated) {
                 setMessages((prev) => {
-                  // If we haven't set the index yet (no transcription), set it now
                   if (botMessageIndexRef === null) {
                     botMessageIndexRef = prev.length;
                   }
@@ -224,8 +217,6 @@ const ChatbotWidget = () => {
               }
 
               botMessage += data.token;
-
-              // Update bot message at the stored index
               setMessages((prev) => {
                 const newMessages = [...prev];
                 if (botMessageIndexRef !== null && botMessageIndexRef < newMessages.length) {
@@ -235,7 +226,6 @@ const ChatbotWidget = () => {
               });
             }
 
-            // Handle errors
             else if (data.type === "error") {
               setMessages((prev) => [...prev, { from: "bot", text: `Error: ${data.message}` }]);
             }
@@ -245,7 +235,6 @@ const ChatbotWidget = () => {
         }
       }
 
-      // Handle empty response
       if (!transcriptionText && !botMessage) {
         setMessages((prev) => [
           ...prev,
@@ -312,7 +301,11 @@ const ChatbotWidget = () => {
                 key={idx}
                 className={`chatbot-message ${msg.from === "user" ? "user" : "bot"}`}
               >
-                {msg.text || (msg.from === "bot" ? <span className="typing-indicator">●●●</span> : "")}
+                {msg.text || (msg.from === "bot" ? (
+                  <span className="typing-indicator">
+                    <span></span>
+                  </span>
+                ) : "")}
               </div>
             ))}
             <div ref={messagesEndRef} />

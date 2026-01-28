@@ -73,13 +73,6 @@
   align-self: flex-end;
 }
 
-/* .chatbot-message.bot {
-  background: var(--card-bg);
-  color: var(--text);
-  align-self: flex-start;
-} */
-
-
 .chatbot-message.bot {
   background: var(--card-bg);
   color: var(--text);
@@ -87,11 +80,7 @@
   word-break: break-word;
 }
 
-
-
-
 /* ------------------ Predefined / Quick Questions ------------------ */
-
 .quick-questions {
   display: flex;
   flex-wrap: wrap;
@@ -118,9 +107,53 @@
   cursor: not-allowed;
 }
 
+/* ------------------ Animated Typing Indicator ------------------ */
+.typing-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px;
+}
 
+.typing-indicator::before,
+.typing-indicator::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--first-color);
+  animation: typing-bounce 1.4s infinite ease-in-out;
+}
 
+.typing-indicator::before {
+  animation-delay: 0s;
+}
 
+.typing-indicator::after {
+  animation-delay: 0.4s;
+}
+
+/* Middle dot using nested span */
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--first-color);
+  animation: typing-bounce 1.4s infinite ease-in-out;
+  animation-delay: 0.2s;
+  display: inline-block;
+}
+
+@keyframes typing-bounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  30% {
+    transform: translateY(-8px);
+    opacity: 1;
+  }
+}
 
 /* Input area */
 .chatbot-input {
