@@ -45,6 +45,11 @@ volumes:
 # pass: admin
 
 
-# if port 3000 is not free
-# run this in temninall in admin mode
-# taskkill /PID 11348 /F
+
+
+# RUN AS ADMIN POWERSHELL
+# to check what is using port
+# netstat -ano | findstr :3000
+
+# then find the pid for that port one
+# taskkill /PID 5760 /F

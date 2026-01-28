@@ -1,0 +1,10 @@
+{
+  "name": "portfolio-root",
+  "private": true,
+  "scripts": {
+    "frontend": "cd frontend && npm run dev",
+    "backend": "cd backend && uvicorn app:app --reload",
+    "dev": "npm run frontend"
+  }
+}
+

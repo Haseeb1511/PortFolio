@@ -47,7 +47,7 @@ npm install lucide-react  # to install lucid
 cd portfolio
 npm install      # only needed first time
 
-npm run dev
+npm run dev  # run from root directer no need for cd frontend
 
 #to start from root directery
 npm --prefix portfolio start
@@ -64,3 +64,9 @@ concurrently "uvicorn chatbot.app:app --reload --host 127.0.0.1 --port 8000" "np
 ![Alt text](picture/local_grafana_working.png)
 ### Grafan Visualization
 ![Alt text](picture/grafana_visalizaiton_local.png)
+
+
+
+
+# add Blogs page
+# Academic Profile

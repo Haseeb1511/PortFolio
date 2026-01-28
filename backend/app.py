@@ -23,7 +23,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 graph = Agent(llm).build_graph()
 
 
@@ -40,11 +39,94 @@ async def chat_endpoint(request: ChatRequest):
                 "collection_name":collection_name,
                 "messages":[HumanMessage(content=request.message)],
             }
-            response = graph.invoke(state, config=config)   # type: ignore
+
+            # using ainvoke
+            if hasattr(graph,"ainvoke"):
+                response = await graph.ainvoke(state, config=config)   #type:ignore
+                print("Used ainvoke method")
+            else:
+                response = await graph.abulk_update_stateinvoke(state, config=config)   #type:ignore
+
             return {"messages": response.get("messages"),
                     "answer": response.get("answer")}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+
+
+# ============= audio endpoint ==============
+
+
+from fastapi import UploadFile, File
+import openai
+import tempfile,os
+from pydub import AudioSegment
+from src.audio.audio_pipeline import AudioToText
+
+
+
+# audio transcripion llm
+open_ai_api = os.environ.get("OPENAI_API_KEY")
+
+# sam as above just the input is audio(transcripn)
+audio_to_text = AudioToText()
+
+@app.post("/chat/audio")
+async def chat_audio(file: UploadFile = File(...)):
+    audio_path = None
+    try:
+        suffix = os.path.splitext(file.filename)[-1]
+        with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+            tmp.write(await file.read())
+            audio_path = tmp.name
+
+        # 1 Transcribe
+        user_text = await asyncio.to_thread(audio_to_text.transcribe,audio_path)
+        user_text = audio_to_text.transcribe(audio_path)
+        print("Transcribed text:", user_text)
+
+        # 2 RAG pipeline
+        with PostgresSaver.from_conn_string(CONNECTION_STRING) as checkpointer:
+            checkpointer.setup()
+            config = {"configurable": {"thread_id": "audio"}}
+            state = {
+                "collection_name": collection_name,
+                "messages": [HumanMessage(content=user_text)],
+            }
+
+
+            # using ainvoke 
+            if hasattr(graph,"ainvoke"):
+                response = await graph.ainvoke(state, config=config)   #type:ignore
+                print("Used ainvoke method")
+            else:
+                response = await graph.abulk_update_stateinvoke(state, config=config)   #type:ignore
+
+
+        return {
+            "input_type": "audio",
+            "transcription": user_text,
+            "answer": response.get("answer", "No answer returned."),
+            "messages": response.get("messages", []),
+        }
+
+    except Exception as e:
+        print("Chat audio endpoint error:", e)
+        return {
+            "error": str(e),
+            "transcription": "[Failed]",
+            "answer": "[Failed]",
+            "messages": [],
+        }
+    finally:
+        if audio_path and os.path.exists(audio_path):
+            os.remove(audio_path)
+
+
+
+
+
 
 
 

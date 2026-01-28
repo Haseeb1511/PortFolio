@@ -24,3 +24,14 @@ uvicorn
 python-multipart
 # for prometeus
 prometheus-fastapi-instrumentator
+
+
+
+
+# Audio
+# sounddevice
+# numpy
+# wavio
+# pyttsx3
+openai
+pydub

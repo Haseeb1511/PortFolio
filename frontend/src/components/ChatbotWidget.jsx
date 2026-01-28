@@ -14,6 +14,13 @@ const PREDEFINED_QUESTIONS = [
 const ChatbotWidget = () => {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+
+  // audip parts
+  const mediaRecorderRef = useRef(null);  //1
+  const audioChunksRef = useRef([]);//2
+  const [recording, setRecording] = useState(false);//3
+
+
   const [messages, setMessages] = useState([
     {
       from: "bot",
@@ -68,6 +75,72 @@ const ChatbotWidget = () => {
     if (e.key === "Enter") sendMessage();
   };
 
+
+
+
+  /* ------------------ AUDIO RECORDING ------------------ */
+
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorderRef.current = new MediaRecorder(stream);
+      audioChunksRef.current = [];
+
+      mediaRecorderRef.current.ondataavailable = (e) => {
+        audioChunksRef.current.push(e.data);
+      };
+
+      mediaRecorderRef.current.onstop = sendAudio;
+
+      mediaRecorderRef.current.start();
+      setRecording(true);
+    } catch (err) {
+      alert("Microphone access denied");
+    }
+  };
+
+  const stopRecording = () => {
+    mediaRecorderRef.current.stop();
+    setRecording(false);
+  };
+
+  const sendAudio = async () => {
+    const audioBlob = new Blob(audioChunksRef.current, {
+      type: "audio/webm",
+    });
+
+    const formData = new FormData();
+    formData.append("file", audioBlob, "voice.webm");
+
+    setLoading(true);
+
+    try {
+      const response = await fetch("http://localhost:8000/chat/audio", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      setMessages((prev) => [
+        ...prev,
+        { from: "user", text: data.transcription },
+        { from: "bot", text: data.answer ?? "No answer returned." },
+      ]);
+    } catch (error) {
+      setMessages((prev) => [
+        ...prev,
+        { from: "bot", text: "Audio processing failed." },
+      ]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+
+
+
   return (
     <>
       {/* Floating chat icon */}
@@ -112,17 +185,29 @@ const ChatbotWidget = () => {
             <div ref={messagesEndRef} />
           </div>
 
+
+{/* Audio + texxt  */}
+
           <div className="chatbot-input">
             <input
               type="text"
-              placeholder="Type a message..."
+              placeholder="Type a message or use mic..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyPress}
-              disabled={loading}
+              disabled={loading || recording}
             />
+
             <button onClick={() => sendMessage()} disabled={loading}>
-              {loading ? "Sending..." : "Send"}
+              Send
+            </button>
+
+            <button
+              onClick={recording ? stopRecording : startRecording}
+              disabled={loading}
+              title="Voice input"
+            >
+              {recording ? "⏹️" : "🎤"}
             </button>
           </div>
         </div>
@@ -130,5 +215,4 @@ const ChatbotWidget = () => {
     </>
   );
 };
-
 export default ChatbotWidget;
