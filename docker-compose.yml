@@ -53,3 +53,8 @@ volumes:
 
 # then find the pid for that port one
 # taskkill /PID 5760 /F
+
+
+# Stop any auto-starting services using port 3000
+# Open Services (Win + R → services.msc)
+# Look for anything like Grafana, Node.js, or React app

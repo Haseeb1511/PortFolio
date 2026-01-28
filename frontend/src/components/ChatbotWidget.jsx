@@ -5,7 +5,7 @@ import "./ChatbotWidget.css";
 /* ------------------ Predefined Questions ------------------ */
 const PREDEFINED_QUESTIONS = [
   "Who is Haseeb Manzoor?",
-  "What is Haseeb Manzoor’s education?",
+  "What is Haseeb Manzoor's education?",
   "What skills does Haseeb Manzoor have?",
   "Where does Haseeb Manzoor currently live?",
   "What projects has Haseeb Manzoor worked on?"
@@ -14,31 +14,36 @@ const PREDEFINED_QUESTIONS = [
 const ChatbotWidget = () => {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
-
-  // audip parts
-  const mediaRecorderRef = useRef(null);  //1
-  const audioChunksRef = useRef([]);//2
-  const [recording, setRecording] = useState(false);//3
-
-
   const [messages, setMessages] = useState([
-    {
-      from: "bot",
-      text: "Hi! I am your AI assistant. Ask me anything about Haseeb Manzoor."
-    }
+    { from: "bot", text: "Hi! I am your AI assistant. Ask me anything about Haseeb Manzoor." }
   ]);
   const [loading, setLoading] = useState(false);
-
   const messagesEndRef = useRef(null);
+  const abortControllerRef = useRef(null);
+
+  // Audio recording
+  const mediaRecorderRef = useRef(null);
+  const audioChunksRef = useRef([]);
+  const [recording, setRecording] = useState(false);
 
   /* ------------------ Auto Scroll ------------------ */
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    requestAnimationFrame(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    });
   };
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  /* ------------------ Handle Enter Key ------------------ */
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  };
 
   /* ------------------ Send Message ------------------ */
   const sendMessage = async (text) => {
@@ -48,38 +53,79 @@ const ChatbotWidget = () => {
     setMessages((prev) => [...prev, { from: "user", text: message }]);
     setInput("");
     setLoading(true);
+    abortControllerRef.current = new AbortController();
 
     try {
       const response = await fetch("http://localhost:8000/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message }),
+        signal: abortControllerRef.current.signal
       });
 
-      const data = await response.json();
-      setMessages((prev) => [
-        ...prev,
-        { from: "bot", text: data.answer ?? "No answer returned." }
-      ]);
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      if (!response.body) throw new Error("No response body");
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+      let botMessage = "";
+      let buffer = "";
+
+      // Add empty bot message for streaming
+      setMessages((prev) => [...prev, { from: "bot", text: "" }]);
+
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop() || "";
+
+        for (const line of lines) {
+          const trimmedLine = line.trim();
+          if (!trimmedLine.startsWith("data:")) continue;
+
+          try {
+            const data = JSON.parse(trimmedLine.replace(/^data:\s*/, ""));
+            if (data.token) {
+              botMessage += data.token;
+              setMessages((prev) => {
+                const newMessages = [...prev];
+                newMessages[newMessages.length - 1] = { from: "bot", text: botMessage };
+                return newMessages;
+              });
+            }
+          } catch (err) {
+            console.error("Failed to parse SSE data:", trimmedLine, err);
+          }
+        }
+      }
+
+      if (!botMessage) {
+        setMessages((prev) => {
+          const newMessages = [...prev];
+          newMessages[newMessages.length - 1] = {
+            from: "bot",
+            text: "Sorry, I didn't receive a response. Please try again."
+          };
+          return newMessages;
+        });
+      }
     } catch (error) {
+      if (error.name === "AbortError") return;
+      console.error("Chat error:", error);
       setMessages((prev) => [
         ...prev,
-        { from: "bot", text: "Sorry, something went wrong." }
+        { from: "bot", text: "Sorry, something went wrong. Please try again." }
       ]);
     } finally {
       setLoading(false);
+      abortControllerRef.current = null;
     }
   };
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") sendMessage();
-  };
-
-
-
-
   /* ------------------ AUDIO RECORDING ------------------ */
-
   const startRecording = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -91,74 +137,160 @@ const ChatbotWidget = () => {
       };
 
       mediaRecorderRef.current.onstop = sendAudio;
-
       mediaRecorderRef.current.start();
       setRecording(true);
     } catch (err) {
+      console.error("Microphone error:", err);
       alert("Microphone access denied");
     }
   };
 
   const stopRecording = () => {
-    mediaRecorderRef.current.stop();
-    setRecording(false);
+    if (mediaRecorderRef.current && recording) {
+      mediaRecorderRef.current.stop();
+      mediaRecorderRef.current.stream.getTracks().forEach((track) => track.stop());
+      setRecording(false);
+    }
   };
 
+  /* ------------------ SEND AUDIO - FULLY FIXED ------------------ */
   const sendAudio = async () => {
-    const audioBlob = new Blob(audioChunksRef.current, {
-      type: "audio/webm",
-    });
-
+    const audioBlob = new Blob(audioChunksRef.current, { type: "audio/webm" });
     const formData = new FormData();
     formData.append("file", audioBlob, "voice.webm");
 
     setLoading(true);
+    abortControllerRef.current = new AbortController();
+
+    let transcriptionText = "";
+    let botMessage = "";
+    let buffer = "";
+    let botMessageIndexRef = null;
+    let botMessageCreated = false; // Track if we've created the bot message
 
     try {
       const response = await fetch("http://localhost:8000/chat/audio", {
         method: "POST",
         body: formData,
+        signal: abortControllerRef.current.signal
       });
 
-      const data = await response.json();
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      if (!response.body) throw new Error("No response body");
 
-      setMessages((prev) => [
-        ...prev,
-        { from: "user", text: data.transcription },
-        { from: "bot", text: data.answer ?? "No answer returned." },
-      ]);
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop() || "";
+
+        for (const line of lines) {
+          const trimmedLine = line.trim();
+          if (!trimmedLine.startsWith("data:")) continue;
+
+          try {
+            const data = JSON.parse(trimmedLine.replace(/^data:\s*/, ""));
+
+            // Handle transcription
+            if (data.type === "transcription") {
+              transcriptionText = data.text;
+
+              // Add user message with transcription
+              setMessages((prev) => {
+                const newMessages = [...prev, { from: "user", text: transcriptionText }];
+                // Store the index where bot message will be added
+                botMessageIndexRef = newMessages.length;
+                return newMessages;
+              });
+            }
+
+            // Handle bot tokens
+            else if (data.type === "token") {
+              // Create empty bot message on first token if not already created
+              if (!botMessageCreated) {
+                setMessages((prev) => {
+                  // If we haven't set the index yet (no transcription), set it now
+                  if (botMessageIndexRef === null) {
+                    botMessageIndexRef = prev.length;
+                  }
+                  return [...prev, { from: "bot", text: "" }];
+                });
+                botMessageCreated = true;
+              }
+
+              botMessage += data.token;
+
+              // Update bot message at the stored index
+              setMessages((prev) => {
+                const newMessages = [...prev];
+                if (botMessageIndexRef !== null && botMessageIndexRef < newMessages.length) {
+                  newMessages[botMessageIndexRef] = { from: "bot", text: botMessage };
+                }
+                return newMessages;
+              });
+            }
+
+            // Handle errors
+            else if (data.type === "error") {
+              setMessages((prev) => [...prev, { from: "bot", text: `Error: ${data.message}` }]);
+            }
+          } catch (err) {
+            console.error("Failed to parse audio SSE data:", err);
+          }
+        }
+      }
+
+      // Handle empty response
+      if (!transcriptionText && !botMessage) {
+        setMessages((prev) => [
+          ...prev,
+          { from: "bot", text: "Audio processing failed. Please try again." }
+        ]);
+      }
     } catch (error) {
+      if (error.name === "AbortError") return;
+      console.error("Audio error:", error);
       setMessages((prev) => [
         ...prev,
-        { from: "bot", text: "Audio processing failed." },
+        { from: "bot", text: "Audio processing failed. Please try again." }
       ]);
     } finally {
       setLoading(false);
+      abortControllerRef.current = null;
     }
   };
 
+  /* ------------------ Cleanup ------------------ */
+  useEffect(() => {
+    return () => {
+      if (abortControllerRef.current) abortControllerRef.current.abort();
+      if (recording && mediaRecorderRef.current) {
+        mediaRecorderRef.current.stop();
+        mediaRecorderRef.current.stream.getTracks().forEach((track) => track.stop());
+      }
+    };
+  }, [recording]);
 
-
-
-
+  /* ------------------ Render ------------------ */
   return (
     <>
       {/* Floating chat icon */}
-      <div
-        className="chatbot-icon"
-        onClick={() => setOpen(!open)}
-        title="Chat with AI"
-      >
+      <div className="chatbot-icon" onClick={() => setOpen(!open)} title="Chat with AI">
         {open ? <X size={24} /> : <MessageCircle size={24} />}
       </div>
 
-      {/* Chatbox */}
+      {/* Chat container */}
       {open && (
         <div className="chatbot-container">
           <div className="chatbot-header">AI Chatbot</div>
 
           <div className="chatbot-messages">
-            {/* Predefined Questions (shown only at start) */}
+            {/* Quick Questions */}
             {messages.length === 1 && (
               <div className="quick-questions">
                 {PREDEFINED_QUESTIONS.map((q, i) => (
@@ -174,20 +306,19 @@ const ChatbotWidget = () => {
               </div>
             )}
 
+            {/* Messages */}
             {messages.map((msg, idx) => (
               <div
                 key={idx}
                 className={`chatbot-message ${msg.from === "user" ? "user" : "bot"}`}
               >
-                {msg.text}
+                {msg.text || (msg.from === "bot" ? <span className="typing-indicator">●●●</span> : "")}
               </div>
             ))}
             <div ref={messagesEndRef} />
           </div>
 
-
-{/* Audio + texxt  */}
-
+          {/* Input */}
           <div className="chatbot-input">
             <input
               type="text"
@@ -197,15 +328,14 @@ const ChatbotWidget = () => {
               onKeyDown={handleKeyPress}
               disabled={loading || recording}
             />
-
-            <button onClick={() => sendMessage()} disabled={loading}>
+            <button onClick={() => sendMessage()} disabled={loading || !input.trim()}>
               Send
             </button>
-
             <button
               onClick={recording ? stopRecording : startRecording}
               disabled={loading}
-              title="Voice input"
+              title={recording ? "Stop recording" : "Start recording"}
+              style={{ backgroundColor: recording ? "#ef4444" : undefined }}
             >
               {recording ? "⏹️" : "🎤"}
             </button>
@@ -215,4 +345,5 @@ const ChatbotWidget = () => {
     </>
   );
 };
+
 export default ChatbotWidget;

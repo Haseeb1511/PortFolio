@@ -18,7 +18,9 @@ class AudioToText:
                 transcript = client.audio.transcriptions.create(
                 model="gpt-4o-transcribe",
                 file=audio,
-                language="en"
+                language="en",
+                temperature=0,
+                prompt="Transcribe the following audio in English."
             ) #type:ignore
             return transcript.text
         except Exception as e:

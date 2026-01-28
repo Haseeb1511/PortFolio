@@ -73,11 +73,20 @@
   align-self: flex-end;
 }
 
+/* .chatbot-message.bot {
+  background: var(--card-bg);
+  color: var(--text);
+  align-self: flex-start;
+} */
+
+
 .chatbot-message.bot {
   background: var(--card-bg);
   color: var(--text);
   align-self: flex-start;
+  word-break: break-word;
 }
+
 
 
 
