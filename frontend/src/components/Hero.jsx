@@ -96,11 +96,11 @@ const Hero = () => {
                             ))}
                         </div>
                     </div>
-                    <div className="hero-image">
+                    {/* <div className="hero-image">
                         <div className="image-wrapper">
                             <img src="/assets/haseeb-ghibli.png" alt="Haseeb Ghibli-style portrait" />
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 <a href="#about" className="scroll-indicator">
                     <FiArrowDown className="scroll-icon" />
