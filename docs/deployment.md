@@ -20,3 +20,15 @@ Branch: main (or whichever branch you want to deploy).
 
 
 backend url :  https://portfolio-psnx.onrender.com
+
+
+
+
+
+# Forned
+netlify
+build command 
+
+project configuration===> build and deploy
+
+add this===> npm run build
