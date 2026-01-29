@@ -1,0 +1,248 @@
+.blog-page {
+  padding-top: 100px;
+  padding-bottom: 60px;
+  min-height: 100vh;
+}
+
+/* Section Header - Matches other pages */
+.section-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: var(--muted-text);
+  font-weight: 400;
+}
+
+/* Blog Layout */
+.blog-layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Sidebar */
+.blog-sidebar {
+  position: sticky;
+  top: 120px;
+  height: fit-content;
+}
+
+.sidebar-title {
+  font-size: 1.3rem;
+  color: var(--text);
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.blog-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.blog-item {
+  padding: 16px 20px;
+  text-align: left;
+  background: var(--card-bg);
+  color: var(--text);
+  border-radius: 12px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px var(--first-shadow-color);
+}
+
+.blog-item:hover {
+  background: var(--card-bg);
+  border-color: var(--first-color);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px var(--first-shadow-color);
+}
+
+.blog-item.active {
+  background: var(--first-color);
+  color: var(--on-accent);
+  border-color: var(--first-color);
+  box-shadow: 0 4px 15px var(--first-shadow-color);
+}
+
+.blog-item-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.blog-item-date {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.blog-item.active .blog-item-date {
+  opacity: 0.9;
+}
+
+/* Blog Content */
+.blog-content {
+  padding: 40px;
+  background: var(--card-bg);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px var(--first-shadow-color);
+  min-height: 500px;
+}
+
+/* Markdown Content Styling */
+.markdown-content h1 {
+  font-size: 2.2rem;
+  color: var(--text);
+  margin-bottom: 20px;
+  font-weight: 700;
+  border-bottom: 3px solid var(--first-color);
+  padding-bottom: 15px;
+}
+
+.markdown-content h2 {
+  font-size: 1.8rem;
+  color: var(--text);
+  margin-top: 35px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.markdown-content h3 {
+  font-size: 1.4rem;
+  color: var(--text);
+  margin-top: 30px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.markdown-content p {
+  color: var(--muted-text);
+  line-height: 1.8;
+  margin-bottom: 20px;
+  font-size: 1.05rem;
+}
+
+.markdown-content a {
+  color: var(--first-color);
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s ease;
+}
+
+.markdown-content a:hover {
+  border-bottom-color: var(--first-color);
+}
+
+.markdown-content strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.markdown-content em {
+  font-style: italic;
+}
+
+.markdown-content code {
+  background: rgba(var(--first-color-rgb, 124, 110, 243), 0.1);
+  color: var(--first-color);
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.95rem;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  color: var(--muted-text);
+  margin-bottom: 20px;
+  padding-left: 30px;
+  line-height: 1.8;
+}
+
+.markdown-content li {
+  margin-bottom: 8px;
+}
+
+/* Loading State */
+.loading {
+  text-align: center;
+  padding: 100px 20px;
+  color: var(--muted-text);
+  font-size: 1.1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .blog-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .blog-sidebar {
+    position: static;
+  }
+
+  .sidebar-title {
+    font-size: 1.2rem;
+  }
+
+  .blog-content {
+    padding: 30px 25px;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .markdown-content h1 {
+    font-size: 1.8rem;
+  }
+
+  .markdown-content h2 {
+    font-size: 1.5rem;
+  }
+
+  .markdown-content h3 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .blog-page {
+    padding-top: 80px;
+  }
+
+  .blog-content {
+    padding: 25px 20px;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+  }
+
+  .markdown-content h1 {
+    font-size: 1.6rem;
+  }
+
+  .markdown-content p {
+    font-size: 1rem;
+  }
+}

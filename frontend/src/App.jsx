@@ -7,9 +7,10 @@ import ProjectsPage from './pages/ProjectsPage';
 import ProjectDetailPage from './pages/ProjectDetailPage';
 import ContactPage from './pages/ContactPage';
 import ExperiencePage from './pages/ExperiencePage';
+import BlogPage from './pages/BlogPage';
+import BlogDetailPage from './pages/BlogDetailPage'; // Add this import
 import './index.css';
-import ChatbotWidget from "./components/ChatbotWidget";  //chat bot 
-
+import ChatbotWidget from "./components/ChatbotWidget";
 
 function App() {
   console.log('App component rendering'); // Debug log
@@ -24,6 +25,8 @@ function App() {
             <Route path="projects" element={<ProjectsPage />} />
             <Route path="projects/:id" element={<ProjectDetailPage />} />
             <Route path="/experience" element={<ExperiencePage />} />
+            <Route path="blog" element={<BlogPage />} />
+            <Route path="blog/:id" element={<BlogDetailPage />} /> {/* Add this route */}
             <Route path="contact" element={<ContactPage />} />
           </Route>
         </Routes>

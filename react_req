@@ -1,0 +1,2 @@
+npm install react-markdown
+npm install vite-plugin-raw --save-dev
