@@ -2,6 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { X, MessageCircle } from "lucide-react";
 import "./ChatbotWidget.css";
 
+//get api url backend
+const API_URL = import.meta.env.VITE_API_URL
+
+
+
 /* ------------------ Predefined Questions ------------------ */
 const PREDEFINED_QUESTIONS = [
   "Who is Haseeb Manzoor?",
@@ -56,7 +61,7 @@ const ChatbotWidget = () => {
     abortControllerRef.current = new AbortController();
 
     try {
-      const response = await fetch("http://localhost:8000/chat", {
+      const response = await fetch(`${API_URL}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message }),
@@ -169,7 +174,7 @@ const ChatbotWidget = () => {
     let botMessageCreated = false;
 
     try {
-      const response = await fetch("http://localhost:8000/chat/audio", {
+      const response = await fetch(`${API_URL}/chat/audio`, {
         method: "POST",
         body: formData,
         signal: abortControllerRef.current.signal
