@@ -13,6 +13,8 @@ Check out my portfolio website: [Haseeb Manzoor Portfolio](https://haseeb-manzoo
 
 ## Port folio
 ![Alt text](picture/live.png)
+![Alt text](picture/live_3.png)
+<!-- ![Alt text](picture/live_2.png) -->
 
 # How to run
 # backend
