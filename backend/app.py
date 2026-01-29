@@ -3,19 +3,58 @@ from fastapi.middleware.cors import CORSMiddleware
 from langgraph.checkpoint.postgres import PostgresSaver
 from src.graph.workflow import Agent
 from src.agent.model_loader import llm
-from src.graph.workflow import Agent
 from src.db_connection.connection import CONNECTION_STRING,collection_name,create_client
 import uvicorn,json
 import logging
 from langchain.messages import HumanMessage
-from pydantic import BaseModel
 from prometheus_fastapi_instrumentator import Instrumentator
 
 #To stream tokens, you need to return a streaming response from FastAPI
 from fastapi.responses import StreamingResponse
 import asyncio
 
+# contact me
+from src.db_connection.connection import supabase_client
+from pydantic import BaseModel,EmailStr
+from fastapi import APIRouter,HTTPException
+
+
+
+# ======================= Contact endpoint =======================
+# router is like a mini-app where you can define multiple endpoints together.
+# Later, you attach the router to your main app:
+router = APIRouter()
+
+class ContactRequest(BaseModel):
+    name:str
+    email:EmailStr
+    subject:str | None=None
+    message: str
+
+@router.post("/contact")
+async def contact_endpoint(request: ContactRequest):
+    try:
+        response = supabase_client.table("contact_me").insert({
+            "name": request.name,
+            "email": request.email,
+            "subject": request.subject,
+            "message": request.message
+        }).execute() 
+        return {
+            "success": True,
+            "message": "Message sent Successfully"
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to save message: {str(e)}"
+        )
+    
+
 app = FastAPI()
+# we attach our router to main fast api app
+app.include_router(router)
+
 
 # prometeus  expose metrics for monitoring
 Instrumentator().instrument(app).expose(app)
@@ -42,7 +81,7 @@ async def chat_endpoint(request: ChatRequest):
         "collection_name": collection_name,
         "messages": [HumanMessage(content=request.message)],
     }
-
+    # event_base_execution ===> Tell me EVERYTHING that happens inside the graph, including each token
     async def event_generator():
         try:
             with PostgresSaver.from_conn_string(CONNECTION_STRING) as checkpointer:
@@ -50,6 +89,7 @@ async def chat_endpoint(request: ChatRequest):
                 config = {"configurable": {"thread_id": "1"}}
 
                 # Use astream_events for token-level streaming
+                # we first check if the langgraph support event base streaming
                 if hasattr(graph, "astream_events"):
                     print("token level streaming is being used")  #debugggg
                     async for event in graph.astream_events(
@@ -58,12 +98,14 @@ async def chat_endpoint(request: ChatRequest):
                         version="v2"
                     ):
                         # Filter for LLM token events
+                        #This event(on_chat_model_stream) fires every time the LLM produces a token.
                         if event["event"] == "on_chat_model_stream":
                             chunk = event.get("data", {}).get("chunk", None)
                             if chunk and hasattr(chunk, "content"):
                                 token = chunk.content
                                 if token:  # Only send non-empty tokens
                                     yield f"data: {json.dumps({'token': token})}\n\n"
+                                    # prvent blocking we add delay 
                                     await asyncio.sleep(0)
                 
                 # Final fallback to non-streaming
@@ -80,13 +122,35 @@ async def chat_endpoint(request: ChatRequest):
 
     return StreamingResponse(
         event_generator(),
-        media_type="text/event-stream",
+        media_type="text/event-stream",  # This is SSE, don’t wait for completion
         headers={
             "Cache-Control": "no-cache",
             "X-Accel-Buffering": "no",
             "Connection": "keep-alive"
         }
     )
+
+
+
+# event = {
+#   "event": "on_chat_model_stream",
+#   "name": "ChatOpenAI",
+#   "data": {
+#       "chunk": AIMessageChunk(content="Hel")
+#   },
+#   "tags": ["llm"],
+#   "metadata": {...}
+# }
+
+# langgraph has many kind of event
+# Event name	   ===> Meaning
+# on_chain_start	===> A chain/node started
+# on_chain_end	===> A chain/node finished
+# on_chat_model_start ===>	LLM started
+# on_chat_model_stream ===>	LLM produced a token
+# on_chat_model_end  ===>	LLM finished
+# on_tool_start	 ===> Tool execution started
+# on_tool_end ===>	Tool execution finished
 
 
 

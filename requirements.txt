@@ -8,7 +8,7 @@ python-dotenv
 langgraph
 langgraph-checkpoint-postgres
 
-
+# Supbase
 supabase
 sqlalchemy
 psycopg2-binary
@@ -20,6 +20,7 @@ pgvector
 # backend
 fastapi
 pydantic
+pydantic[email]
 uvicorn
 python-multipart
 # for prometeus

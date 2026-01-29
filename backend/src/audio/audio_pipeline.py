@@ -35,8 +35,6 @@ class AudioToText:
 # Browser users must record audio client-side
 
 
-
-
 # React (Browser)
 # Record audio using Web Audio API / MediaRecorder
 # Send audio file (wav / webm) to FastAPI

@@ -15,3 +15,6 @@ SUPABASE_URL = os.environ.get("SUPABASE_URL","")
 supabase_client = create_client(SUPABASE_URL,SUPERBASE_SERVICE_ROLE_KEY)
 collection_name = "haseeb_portfolio"
 print("Succefully coonectd to Supabase client")
+
+
+

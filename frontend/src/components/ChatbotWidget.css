@@ -133,7 +133,7 @@
   animation-delay: 0.4s;
 }
 
-/* Middle dot using nested span */
+/* ========================Typing Indicator======================= */
 .typing-indicator span {
   width: 8px;
   height: 8px;

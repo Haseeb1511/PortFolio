@@ -301,6 +301,7 @@ const ChatbotWidget = () => {
                 key={idx}
                 className={`chatbot-message ${msg.from === "user" ? "user" : "bot"}`}
               >
+                {/* ----------------------Typing Indicator ------------------------- */}
                 {msg.text || (msg.from === "bot" ? (
                   <span className="typing-indicator">
                     <span></span>

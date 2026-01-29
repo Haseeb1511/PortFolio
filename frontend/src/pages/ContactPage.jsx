@@ -2,119 +2,144 @@ import { useState } from 'react';
 import { FiMail, FiPhone, FiSend } from 'react-icons/fi';
 import './ContactPage.css';
 
+// Get API URL from .env
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+
 const ContactPage = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-    });
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
 
-    const handleChange = (e) => {
-        setFormData(prev => ({
-            ...prev,
-            [e.target.name]: e.target.value
-        }));
-    };
+  const handleChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsSubmitting(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
 
-        // Simulate form submission
-        await new Promise(resolve => setTimeout(resolve, 1000));
+    try {
+      const response = await fetch(`${API_URL}/contact`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
 
-        // You can integrate with emailjs or other service here
-        setSubmitStatus('success');
-        setIsSubmitting(false);
-        setFormData({ name: '', email: '', subject: '', message: '' });
+      if (!response.ok) {
+        throw new Error("Failed to send message");
+      }
 
-        setTimeout(() => setSubmitStatus(null), 3000);
-    };
+      setSubmitStatus("success");
+      setFormData({ name: '', email: '', subject: '', message: '' });
 
-    return (
-        <div className="contact-page">
-            <section className="section">
-                <div className="container">
-                    <h1 className="section-title">Let's Work Together</h1>
-                    <p className="section-subtitle">Do you have a project in mind? Contact me here</p>
+    } catch (error) {
+      console.error("Error sending contact form:", error);
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+      // Automatically hide message after 3 seconds
+      setTimeout(() => setSubmitStatus(null), 3000);
+    }
+  };
 
-                    <div className="contact-layout">
-                        <div className="contact-info">
-                            <h2>Find me <span>↘</span></h2>
+  return (
+    <div className="contact-page">
+      <section className="section">
+        <div className="container">
+          <h1 className="section-title">Let's Work Together</h1>
+          <p className="section-subtitle">Do you have a project in mind? Contact me here</p>
 
-                            <a href="mailto:iamhaseebmanzoor@gmail.com" className="contact-link">
-                                <FiMail className="contact-icon" />
-                                <span>iamhaseebmanzoor@gmail.com</span>
-                            </a>
+          <div className="contact-layout">
+            {/* Contact Info */}
+            <div className="contact-info">
+              <h2>Find me <span>↘</span></h2>
 
-                            <a href="tel:+923191140506" className="contact-link">
-                                <FiPhone className="contact-icon" />
-                                <span>+92 319 114 0506</span>
-                            </a>
-                        </div>
+              <a href="mailto:iamhaseebmanzoor@gmail.com" className="contact-link">
+                <FiMail className="contact-icon" />
+                <span>iamhaseebmanzoor@gmail.com</span>
+              </a>
 
-                        <form className="contact-form" onSubmit={handleSubmit}>
-                            <div className="form-row">
-                                <input
-                                    type="text"
-                                    name="name"
-                                    value={formData.name}
-                                    onChange={handleChange}
-                                    placeholder="Your Name"
-                                    required
-                                    className="form-input"
-                                />
-                                <input
-                                    type="email"
-                                    name="email"
-                                    value={formData.email}
-                                    onChange={handleChange}
-                                    placeholder="Your Email"
-                                    required
-                                    className="form-input"
-                                />
-                            </div>
+              <a href="tel:+923191140506" className="contact-link">
+                <FiPhone className="contact-icon" />
+                <span>+92 319 114 0506</span>
+              </a>
+            </div>
 
-                            <input
-                                type="text"
-                                name="subject"
-                                value={formData.subject}
-                                onChange={handleChange}
-                                placeholder="Subject"
-                                required
-                                className="form-input"
-                            />
+            {/* Contact Form */}
+            <form className="contact-form" onSubmit={handleSubmit}>
+              <div className="form-row">
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="Your Name"
+                  required
+                  className="form-input"
+                />
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Your Email"
+                  required
+                  className="form-input"
+                />
+              </div>
 
-                            <textarea
-                                name="message"
-                                value={formData.message}
-                                onChange={handleChange}
-                                placeholder="Write Your Message here..."
-                                required
-                                className="form-textarea"
-                                rows="6"
-                            />
+              <input
+                type="text"
+                name="subject"
+                value={formData.subject}
+                onChange={handleChange}
+                placeholder="Subject"
+                required
+                className="form-input"
+              />
 
-                            <button
-                                type="submit"
-                                className="btn btn-primary submit-btn"
-                                disabled={isSubmitting}
-                            >
-                                {isSubmitting ? 'Sending...' : 'Send'} <FiSend />
-                            </button>
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                placeholder="Write Your Message here..."
+                required
+                className="form-textarea"
+                rows="6"
+              />
 
-                            {submitStatus === 'success' && (
-                                <p className="success-message">Message sent successfully!</p>
-                            )}
-                        </form>
-                    </div>
-                </div>
-            </section>
+              <button
+                type="submit"
+                className="btn btn-primary submit-btn"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Sending...' : 'Send'} <FiSend />
+              </button>
+
+              {/* Success / Error Messages */}
+              {submitStatus === 'success' && (
+                <p className="success-message">Message sent successfully!</p>
+              )}
+              {submitStatus === 'error' && (
+                <p className="error-message">Something went wrong. Please try again.</p>
+              )}
+            </form>
+          </div>
         </div>
-    );
+      </section>
+    </div>
+  );
 };
 
 export default ContactPage;
