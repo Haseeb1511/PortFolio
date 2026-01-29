@@ -30,5 +30,11 @@ netlify
 build command 
 
 project configuration===> build and deploy
+In this set:
+Base directory	frontend 
+Build command	npm run build 
+Publish directory	frontend/dist 
 
-add this===> npm run build
+
+
+ add env key in netligy ==>VITE_API_URL=https://portfolio-psnx.onrender.com

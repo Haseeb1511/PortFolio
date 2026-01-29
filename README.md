@@ -1,6 +1,58 @@
 # In Development  yet
 
+## Portfolio
 
+Check out my portfolio website: [Haseeb Manzoor Portfolio](https://haseeb-manzoor.netlify.app/)
+
+## Features
+1. **Chatbot**
+2. **Backend FastAPI**
+3. **Frontend React**
+4. **Database Postgre(supabase)**
+
+
+## Port folio
+![Alt text](picture/live.png)
+
+# How to run
+# backend
+```bash
+
+# Build docker image first
+docker build -t fastapi-backend -f backend/Dockerfile .
+
+# then run it 
+docker run -p 8000:8000 fastapi-backend
+
+#to run with .env
+docker run -p 8000:8000 --env-file .env fastapi-backend
+
+```
+
+
+
+# frontend
+```bash
+npm install lucide-react  # to install lucid
+npm install react-markdown  # to install markdown
+
+npm install      # only needed first time
+
+# can be run from root directery
+npm run dev  # run from root directer no need for cd frontend
+
+#to start from root directery
+npm --prefix portfolio start
+```
+
+
+
+
+
+
+
+### Grafan and Prometeus
+``Only tested in local not in produciton``
 ```bash
 ┌──────────┐      ┌────────────┐
 │ React    │ ---> │ FastAPI    │
@@ -20,44 +72,6 @@
 
 
 ```
-# How to run
-
-# backend
-```bash
-# run without docker
-uv run uvicorn chatbot_rag.backend.app:app --reload
-
-# docker build image(or rebuild)
-docker build -t fastapi-backend -f backend/Docker.fastapi backend
-
-# to run
-docker run -p 8000:8000 fastapi-backend
-#to run with .env
-docker run -p 8000:8000 --env-file .env fastapi-backend
-
-#local
-http://localhost:8000
-
-```
-
-# frontend
-```bash
-npm install lucide-react  # to install lucid
-
-cd portfolio
-npm install      # only needed first time
-
-npm run dev  # run from root directer no need for cd frontend
-
-#to start from root directery
-npm --prefix portfolio start
-```
-
-
-# run both togehterh
-concurrently "uvicorn chatbot.app:app --reload --host 127.0.0.1 --port 8000" "npm --prefix portfolio start"
-
-
 
 
 # Grafan local
@@ -68,5 +82,3 @@ concurrently "uvicorn chatbot.app:app --reload --host 127.0.0.1 --port 8000" "np
 
 
 
-# add Blogs page
-# Academic Profile
