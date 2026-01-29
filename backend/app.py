@@ -51,6 +51,7 @@ async def chat_endpoint(request: ChatRequest):
 
                 # Use astream_events for token-level streaming
                 if hasattr(graph, "astream_events"):
+                    print("token level streaming is being used")  #debugggg
                     async for event in graph.astream_events(
                         state, 
                         config=config,
@@ -64,19 +65,6 @@ async def chat_endpoint(request: ChatRequest):
                                 if token:  # Only send non-empty tokens
                                     yield f"data: {json.dumps({'token': token})}\n\n"
                                     await asyncio.sleep(0)
-                
-                # Fallback to regular streaming if astream_events not available
-                elif hasattr(graph, "astream"):
-                    async for chunk in graph.astream(state, config=config, stream_mode="updates"):
-                        # Extract the answer from the final state
-                        if isinstance(chunk, dict):
-                            for node_name, node_output in chunk.items():
-                                if "answer" in node_output:
-                                    answer = node_output["answer"]
-                                    # Simulate token streaming by splitting the answer
-                                    for word in answer.split():
-                                        yield f"data: {json.dumps({'token': word + ' '})}\n\n"
-                                        await asyncio.sleep(0.01)  # Small delay for effect
                 
                 # Final fallback to non-streaming
                 else:
@@ -146,6 +134,7 @@ async def chat_audio(file: UploadFile = File(...)):
 
             # 2. Stream RAG pipeline response
             with PostgresSaver.from_conn_string(CONNECTION_STRING) as checkpointer:
+                
                 checkpointer.setup()
                 config = {"configurable": {"thread_id": "audio"}}
                 state = {
@@ -155,6 +144,7 @@ async def chat_audio(file: UploadFile = File(...)):
 
                 # Use astream_events for token-level streaming
                 if hasattr(graph, "astream_events"):
+                    print("token level streaming is being used")  #debugggg
                     async for event in graph.astream_events(
                         state,
                         config=config,
@@ -168,17 +158,6 @@ async def chat_audio(file: UploadFile = File(...)):
                                 if token:
                                     yield f"data: {json.dumps({'type': 'token', 'token': token})}\n\n"
                                     await asyncio.sleep(0)
-                
-                # Fallback to regular streaming
-                elif hasattr(graph, "astream"):
-                    async for chunk in graph.astream(state, config=config, stream_mode="updates"):
-                        if isinstance(chunk, dict):
-                            for node_name, node_output in chunk.items():
-                                if "answer" in node_output:
-                                    answer = node_output["answer"]
-                                    for word in answer.split():
-                                        yield f"data: {json.dumps({'type': 'token', 'token': word + ' '})}\n\n"
-                                        await asyncio.sleep(0.01)
                 
                 # Final fallback
                 else:
