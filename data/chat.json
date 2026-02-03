@@ -1,0 +1,121 @@
+[
+  {
+    "id": "haseeb_identity",
+    "text": "Haseeb Manzoor is an AI Engineer with expertise in Machine Learning, Deep Learning, and Generative AI. He has hands-on experience with LangChain, LangGraph, CrewAI, and MLOps pipelines.",
+    "metadata": {
+      "entity": "Haseeb Manzoor",
+      "category": "profile",
+      "topic": "identity"
+    }
+  },
+
+  {
+    "id": "haseeb_location",
+    "text": "Haseeb Manzoor was born in Okara, Punjab, Pakistan. He currently lives in Rawalpindi, Punjab, Pakistan. His hometown is Tehsil Nakyal, District Kotli, Azad Kashmir, Pakistan.",
+    "metadata": {
+      "entity": "Haseeb Manzoor",
+      "category": "personal",
+      "topic": "location"
+    }
+  },
+
+  {
+    "id": "haseeb_education_overview",
+    "text": "Haseeb Manzoor completed his Matriculation and FSc (Pre-Engineering) from Army Public School and College System, Okara Cantt. He earned a BS in Electrical Engineering from COMSATS University Islamabad (2020–2025) and is currently pursuing an MS in Artificial Intelligence at NUST Islamabad (2025–present).",
+    "metadata": {
+      "entity": "Haseeb Manzoor",
+      "category": "education",
+      "topic": "overview"
+    }
+  },
+
+  {
+    "id": "haseeb_why_ai",
+    "text": "Haseeb Manzoor chose Artificial Intelligence after Electrical Engineering due to his strong interest in programming and computing. During his BS, he studied courses such as Introduction to Programming, Object-Oriented Programming, Artificial Intelligence, Machine Learning, and Deep Learning.",
+    "metadata": {
+      "entity": "Haseeb Manzoor",
+      "category": "career",
+      "topic": "why_ai"
+    }
+  },
+
+  {
+    "id": "haseeb_bs_fyp",
+    "text": "Haseeb Manzoor completed his Bachelor's Final Year Project in the domain of Internet of Things (IoT).",
+    "metadata": {
+      "entity": "Haseeb Manzoor",
+      "category": "education",
+      "topic": "final_year_project"
+    }
+  },
+
+  {
+    "id": "haseeb_contact",
+    "text": "Haseeb Manzoor can be contacted via phone or WhatsApp at +92 319 1140506 or by email at iamhaseebmanzoor@gmail.com.",
+    "metadata": {
+      "entity": "Haseeb Manzoor",
+      "category": "contact",
+      "topic": "contact_details"
+    }
+  },
+
+  {
+    "id": "haseeb_availability",
+    "text": "Haseeb Manzoor is available 24/7.",
+    "metadata": {
+      "entity": "Haseeb Manzoor",
+      "category": "availability",
+      "topic": "availability"
+    }
+  },
+
+  {
+    "id": "haseeb_skills",
+    "text": "Haseeb Manzoor is skilled in Python and Java. His expertise includes TensorFlow, PyTorch, Scikit-learn, Hugging Face, LangChain, LangGraph, CrewAI, FastAPI, Streamlit, Docker, MLflow, GitHub Actions, AWS, RAG, fine-tuning, LoRA, QLoRA, Whisper, and vector databases such as ChromaDB, Weaviate, Pinecone, and PostgreSQL.",
+    "metadata": {
+      "entity": "Haseeb Manzoor",
+      "category": "skills",
+      "topic": "technical_skills"
+    }
+  },
+
+  {
+    "id": "haseeb_project_transformer",
+    "text": "Haseeb Manzoor designed and trained an Encoder–Decoder Transformer for English to Urdu translation using PyTorch. The model included multi-head attention, cross-attention, RMSNorm, SwiGLU, and SentencePiece tokenization, achieving a BLEU score of 22.96.",
+    "metadata": {
+      "entity": "Haseeb Manzoor",
+      "category": "projects",
+      "topic": "transformer_translation"
+    }
+  },
+
+  {
+    "id": "haseeb_project_trip_agent",
+    "text": "Haseeb Manzoor built an AI Trip Organizer Agent using LangChain, LangGraph, Streamlit, and FastAPI with multi-step workflows, real-time interaction, and API integrations for weather, currency, and expenses.",
+    "metadata": {
+      "entity": "Haseeb Manzoor",
+      "category": "projects",
+      "topic": "agentic_ai"
+    }
+  },
+
+  {
+    "id": "haseeb_project_rag",
+    "text": "Haseeb Manzoor developed a RAG-based agentic application with hybrid retrieval, domain-specific vector stores, multimodal input, contextual compression, and Docker-based deployment.",
+    "metadata": {
+      "entity": "Haseeb Manzoor",
+      "category": "projects",
+      "topic": "rag_system"
+    }
+  },
+
+  {
+    "id": "haseeb_experience",
+    "text": "Haseeb Manzoor worked as an AI/ML Engineer at DevelopersHub Corporation (remote) from March 2025 to May 2025, where he developed sentiment analysis, fake news detection, credit risk modeling, anomaly detection, and BERT-based emotion recognition systems.",
+    "metadata": {
+      "entity": "Haseeb Manzoor",
+      "category": "experience",
+      "topic": "professional_experience"
+    }
+  }
+]

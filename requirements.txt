@@ -12,7 +12,6 @@ langgraph-checkpoint-postgres
 supabase
 sqlalchemy
 psycopg2-binary
-
 langchain-postgres
 pgvector
 
@@ -30,9 +29,5 @@ prometheus-fastapi-instrumentator
 
 
 # Audio
-# sounddevice
-# numpy
-# wavio
-# pyttsx3
 openai
 pydub

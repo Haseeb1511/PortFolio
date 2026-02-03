@@ -5,8 +5,6 @@ import "./ChatbotWidget.css";
 //get api url backend
 const API_URL = import.meta.env.VITE_API_URL
 
-
-
 /* ------------------ Predefined Questions ------------------ */
 const PREDEFINED_QUESTIONS = [
   "Who is Haseeb Manzoor?",
@@ -93,13 +91,18 @@ const ChatbotWidget = () => {
 
           try {
             const data = JSON.parse(trimmedLine.replace(/^data:\s*/, ""));
-            if (data.token) {
+
+            if (data.type === "token") {
               botMessage += data.token;
               setMessages((prev) => {
                 const newMessages = [...prev];
                 newMessages[newMessages.length - 1] = { from: "bot", text: botMessage };
                 return newMessages;
               });
+            }
+
+            else if (data.type === "error") {
+              setMessages((prev) => [...prev, { from: "bot", text: `Error: ${data.message}` }]);
             }
           } catch (err) {
             console.error("Failed to parse SSE data:", trimmedLine, err);
@@ -158,7 +161,7 @@ const ChatbotWidget = () => {
     }
   };
 
-  /* ------------------ SEND AUDIO - FULLY FIXED ------------------ */
+  /* ------------------ SEND AUDIO - STREAMING FIX ------------------ */
   const sendAudio = async () => {
     const audioBlob = new Blob(audioChunksRef.current, { type: "audio/webm" });
     const formData = new FormData();
@@ -213,9 +216,7 @@ const ChatbotWidget = () => {
             else if (data.type === "token") {
               if (!botMessageCreated) {
                 setMessages((prev) => {
-                  if (botMessageIndexRef === null) {
-                    botMessageIndexRef = prev.length;
-                  }
+                  if (botMessageIndexRef === null) botMessageIndexRef = prev.length;
                   return [...prev, { from: "bot", text: "" }];
                 });
                 botMessageCreated = true;
