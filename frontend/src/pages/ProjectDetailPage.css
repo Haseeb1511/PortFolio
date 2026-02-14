@@ -173,6 +173,41 @@
   color: var(--muted-text);
 }
 
+/* Markdown Content Styling */
+.markdown-content {
+  line-height: 1.6;
+  color: var(--muted-text);
+}
+
+.markdown-content p {
+  margin-bottom: 16px;
+}
+
+.markdown-content strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.markdown-content ul, 
+.markdown-content ol {
+  margin-bottom: 16px;
+  padding-left: 24px;
+}
+
+.markdown-content li {
+  margin-bottom: 8px;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4 {
+  color: var(--text);
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
 /* Project Actions Buttons */
 .project-actions {
   display: flex;

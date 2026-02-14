@@ -1,6 +1,7 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { getProjectById, getAllProjects } from '../data/projects';
 import { FiGithub, FiExternalLink, FiArrowLeft, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import ReactMarkdown from 'react-markdown';
 import { useState } from 'react';
 import './ProjectDetailPage.css';
 
@@ -85,9 +86,9 @@ const ProjectDetailPage = () => {
                             <div className="project-description-full">
                                 <h3>Overview</h3>
                                 <div className="description-content">
-                                    {project.fullDescription.split('\n\n').map((paragraph, idx) => (
-                                        <p key={idx}>{paragraph}</p>
-                                    ))}
+                                    <div className="markdown-content">
+                                        <ReactMarkdown>{project.fullDescription}</ReactMarkdown>
+                                    </div>
                                 </div>
                             </div>
 
