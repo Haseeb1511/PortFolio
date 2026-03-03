@@ -21,6 +21,16 @@ const ProjectDetailPage = () => {
 
     const hasMultipleImages = project.images && project.images.length > 1;
 
+    const getYoutubeId = (url) => {
+        if (typeof url === 'string' && url.includes('youtube.com/embed/')) {
+            return url.split('youtube.com/embed/')[1].split('?')[0];
+        }
+        return null;
+    };
+
+    const currentMedia = project.images[currentImageIndex];
+    const ytId = getYoutubeId(currentMedia);
+
     const nextImage = () => {
         setCurrentImageIndex((prev) => (prev + 1) % project.images.length);
     };
@@ -40,11 +50,22 @@ const ProjectDetailPage = () => {
                     <article className="project-detail">
                         <div className="project-gallery">
                             <div className="gallery-main">
-                                <img
-                                    src={project.images[currentImageIndex]}
-                                    alt={project.title}
-                                    className="gallery-image"
-                                />
+                                {ytId ? (
+                                    <iframe
+                                        className="gallery-image"
+                                        src={currentMedia}
+                                        title={project.title}
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                    />
+                                ) : (
+                                    <img
+                                        src={currentMedia}
+                                        alt={project.title}
+                                        className="gallery-image"
+                                    />
+                                )}
                                 {hasMultipleImages && (
                                     <>
                                         <button className="gallery-btn prev" onClick={prevImage}>
@@ -58,15 +79,18 @@ const ProjectDetailPage = () => {
                             </div>
                             {hasMultipleImages && (
                                 <div className="gallery-thumbnails">
-                                    {project.images.map((img, idx) => (
-                                        <button
-                                            key={idx}
-                                            className={`thumbnail ${idx === currentImageIndex ? 'active' : ''}`}
-                                            onClick={() => setCurrentImageIndex(idx)}
-                                        >
-                                            <img src={img} alt={`${project.title} ${idx + 1}`} />
-                                        </button>
-                                    ))}
+                                    {project.images.map((img, idx) => {
+                                        const thumbYtId = getYoutubeId(img);
+                                        return (
+                                            <button
+                                                key={idx}
+                                                className={`thumbnail ${idx === currentImageIndex ? 'active' : ''}`}
+                                                onClick={() => setCurrentImageIndex(idx)}
+                                            >
+                                                <img src={thumbYtId ? `https://img.youtube.com/vi/${thumbYtId}/mqdefault.jpg` : img} alt={`${project.title} ${idx + 1}`} />
+                                            </button>
+                                        );
+                                    })}
                                 </div>
                             )}
                         </div>

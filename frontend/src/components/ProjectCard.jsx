@@ -7,6 +7,16 @@ const ProjectCard = ({ project, isLandscape = true }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const hasMultipleImages = project.images && project.images.length > 1;
 
+    const getYoutubeId = (url) => {
+        if (typeof url === 'string' && url.includes('youtube.com/embed/')) {
+            return url.split('youtube.com/embed/')[1].split('?')[0];
+        }
+        return null;
+    };
+
+    const currentMedia = project.images[currentImageIndex];
+    const ytId = getYoutubeId(currentMedia);
+
     const nextImage = (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -22,13 +32,24 @@ const ProjectCard = ({ project, isLandscape = true }) => {
     return (
         <article className={`project-card ${isLandscape ? 'landscape' : ''}`}>
             <div className="project-image-container">
-                <Link to={`/projects/${project.id}`} className="project-image-link">
-                    <img
-                        src={project.images[currentImageIndex]}
-                        alt={project.title}
+                {ytId ? (
+                    <iframe
                         className="project-image"
+                        src={currentMedia}
+                        title={project.title}
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
                     />
-                </Link>
+                ) : (
+                    <Link to={`/projects/${project.id}`} className="project-image-link">
+                        <img
+                            src={currentMedia}
+                            alt={project.title}
+                            className="project-image"
+                        />
+                    </Link>
+                )}
                 {hasMultipleImages && (
                     <>
                         <button className="carousel-btn prev" onClick={prevImage} aria-label="Previous image">
