@@ -1,6 +1,50 @@
 // Projects data with tools/technologies and multiple images
 const projects = [
 
+
+  {
+    id: "medvision-ai",
+    title: "MedVision AI - Medical Multimodal Assistant",
+    description: "An intelligent, agentic medical AI assistant combining Multimodal RAG, LangGraph orchestration, and multiple specialized medical MCP tools.",
+    fullDescription: `A sophisticated medical AI assistant designed to deliver evidence-based, context-aware clinical insights by reasoning over documents, images, and external biomedical databases. 
+
+Key Technical Implementations:
+- **Multimodal RAG & Local Vision**: Ingests PDFs to extract both text and images simultaneously. Uses the lightweight local Salesforce BLIP model for offline image captioning, eliminating the need for expensive external vision APIs.
+- **RRF Re-ranking**: Integrates Reciprocal Rank Fusion to merge text and image retrieval results into a highly accurate unified context.
+- **Agentic ReAct Workflow**: Powered by GPT-4o and LangGraph, the agent autonomously decides which tools to call, in what order, and when to finalize responses.
+- **Medical MCP Servers**: Directly integrated with specialized Medical Context Protocol (MCP) servers to fetch live data from PubMed, OpenFDA, and ClinicalTrials.gov.
+- **Dual Memory Architecture**: Implements a conversation summary node for Short-Term Memory (STM) and Supabase pgvector for persistent Long-Term Memory (LTM) across sessions.
+- **Real-time Streaming & SaaS Ready**: Features real-time SSE token streaming, JWT-based secure user authentication, and tenant isolation for production readiness.`,
+    images: [
+      "https://www.youtube.com/embed/W9g9SPKEGOA",
+      "/assets/projects/medvision-ai/cover.png",
+      "/assets/projects/medvision-ai/1.png",
+      "/assets/projects/medvision-ai/3.png",
+      "/assets/projects/medvision-ai/4.png",
+      "/assets/projects/medvision-ai/5.png",
+      "/assets/projects/medvision-ai/graph.png"
+    ],
+    tools: [
+      "FastAPI",
+      "LangGraph",
+      "React",
+      "Tailwind CSS",
+      "PostgreSQL (pgvector)",
+      "Supabase",
+      "Weaviate",
+      "GPT-4o & BLIP",
+      "MCP (Model Context Protocol)",
+      "RAG"
+    ],
+    github: "https://github.com/Haseeb1511/med-vision-ai.git",
+    liveDemo: null,
+    featured: true,
+    date: "2026-03-18"
+  },
+
+
+
+
   {
     "id": "qanoon-ai",
     "title": "QanoonAI",
@@ -141,26 +185,26 @@ Key Features:
 
 
 
-  {
-    id: "medical-chatbot",
-    title: "RAG-Based Custom Medical Chatbot (Multimodal)",
-    description: "Multimodal medical chatbot leveraging RAG architecture to provide accurate health information from multiple medical knowledge bases.",
-    fullDescription: `A multimodal medical chatbot that uses RAG architecture to retrieve accurate health information from multiple medical knowledge bases. Supports both text and image inputs for comprehensive medical queries.
+//   {
+//     id: "medical-chatbot",
+//     title: "RAG-Based Custom Medical Chatbot (Multimodal)",
+//     description: "Multimodal medical chatbot leveraging RAG architecture to provide accurate health information from multiple medical knowledge bases.",
+//     fullDescription: `A multimodal medical chatbot that uses RAG architecture to retrieve accurate health information from multiple medical knowledge bases. Supports both text and image inputs for comprehensive medical queries.
 
-Key Features:
-- Multimodal Input: Text and image support
-- RAG Architecture: Accurate information retrieval
-- Multiple Knowledge Bases: Comprehensive medical data
-- Streamlit Interface: User-friendly chat interface`,
-    images: [
-      "/assets/projects/medical-chatbot/cover.png"
-    ],
-    tools: ["LangChain", "Streamlit", "Python"],
-    github: "https://github.com/Haseeb1511/MedBot_RAG-Powered-multmodel-multidomain-.git",
-    liveDemo: null,
-    featured: false,
-    date: "2024-08-15"
-  },
+// Key Features:
+// - Multimodal Input: Text and image support
+// - RAG Architecture: Accurate information retrieval
+// - Multiple Knowledge Bases: Comprehensive medical data
+// - Streamlit Interface: User-friendly chat interface`,
+//     images: [
+//       "/assets/projects/medical-chatbot/cover.png"
+//     ],
+//     tools: ["LangChain", "Streamlit", "Python"],
+//     github: "https://github.com/Haseeb1511/MedBot_RAG-Powered-multmodel-multidomain-.git",
+//     liveDemo: null,
+//     featured: false,
+//     date: "2024-08-15"
+//   },
 
 
 
