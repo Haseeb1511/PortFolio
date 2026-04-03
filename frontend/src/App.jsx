@@ -7,6 +7,7 @@ import ProjectsPage from './pages/ProjectsPage';
 import ProjectDetailPage from './pages/ProjectDetailPage';
 import ContactPage from './pages/ContactPage';
 import ExperiencePage from './pages/ExperiencePage';
+import CertificatesPage from './pages/CertificatesPage';
 import BlogPage from './pages/BlogPage';
 import BlogDetailPage from './pages/BlogDetailPage'; // Add this import
 import './index.css';
@@ -25,6 +26,7 @@ function App() {
             <Route path="projects" element={<ProjectsPage />} />
             <Route path="projects/:id" element={<ProjectDetailPage />} />
             <Route path="/experience" element={<ExperiencePage />} />
+            <Route path="/certificates" element={<CertificatesPage />} />
             <Route path="blog" element={<BlogPage />} />
             <Route path="blog/:id" element={<BlogDetailPage />} /> {/* Add this route */}
             <Route path="contact" element={<ContactPage />} />

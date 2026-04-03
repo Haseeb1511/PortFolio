@@ -1,0 +1,160 @@
+/* ---- Certificates Page ---- */
+.certificates-page {
+  padding-top: 100px;
+}
+
+/* ---- Grid Layout ---- */
+.certificates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+  gap: 40px;
+  margin-top: 20px;
+}
+
+/* ---- Card ---- */
+.certificate-card {
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  animation: fadeSlideUp 0.5s ease both;
+}
+
+.certificate-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px var(--first-shadow-color);
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---- Landscape Image Wrapper ---- */
+.certificate-image-wrapper {
+  position: relative;
+  width: 100%;
+  /* 16:9 landscape ratio */
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--third-color);
+}
+
+.certificate-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.45s ease;
+  display: block;
+}
+
+.certificate-card:hover .certificate-img {
+  transform: scale(1.04);
+}
+
+/* ---- Hover Overlay ---- */
+.certificate-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(14, 165, 233, 0.18);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.certificate-card:hover .certificate-overlay {
+  opacity: 1;
+}
+
+.view-btn {
+  font-size: 0.9rem;
+  padding: 10px 22px;
+  border-radius: 30px;
+  box-shadow: 0 4px 20px rgba(14, 165, 233, 0.4);
+  transform: translateY(10px);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.certificate-card:hover .view-btn {
+  transform: translateY(0);
+}
+
+/* ---- Card Info ---- */
+.certificate-info {
+  padding: 22px 26px 26px;
+  background: var(--card-bg);
+}
+
+.certificate-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.certificate-issuer {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--first-color);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: var(--third-color);
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.certificate-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 1100px) {
+  .certificates-grid {
+    grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .certificates-page {
+    padding-top: 80px;
+  }
+
+  .certificates-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .certificate-title {
+    font-size: 1.05rem;
+  }
+
+  .certificate-info {
+    padding: 18px 20px 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .certificate-info {
+    padding: 14px 16px 18px;
+  }
+
+  .certificate-title {
+    font-size: 1rem;
+  }
+}
