@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { FiMail, FiPhone, FiSend } from 'react-icons/fi';
+import { FiMail, FiPhone, FiSend, FiLinkedin, FiGithub, FiYoutube } from 'react-icons/fi';
+import { FaWhatsapp } from 'react-icons/fa';
 import './ContactPage.css';
 
 // Get API URL from .env
@@ -48,17 +49,37 @@ const ContactPage = () => {
       setSubmitStatus("error");
     } finally {
       setIsSubmitting(false);
-      // Automatically hide message after 3 seconds
-      setTimeout(() => setSubmitStatus(null), 3000);
+      setTimeout(() => setSubmitStatus(null), 4000);
     }
   };
+
+  const socialLinks = [
+    {
+      icon: <FiLinkedin />,
+      label: 'LinkedIn',
+      url: 'https://www.linkedin.com/in/haseeb-manzoor-839458252',
+      color: '#0077b5',
+    },
+    {
+      icon: <FiGithub />,
+      label: 'GitHub',
+      url: 'https://github.com/Haseeb1511',
+      color: '#333',
+    },
+    {
+      icon: <FaWhatsapp />,
+      label: 'WhatsApp',
+      url: 'https://wa.me/923191140506',
+      color: '#25d366',
+    },
+  ];
 
   return (
     <div className="contact-page">
       <section className="section">
         <div className="container">
           <h1 className="section-title">Let's Work Together</h1>
-          <p className="section-subtitle">Do you have a project in mind? Contact me here</p>
+          <p className="section-subtitle">Have a project in mind? Let's build something great.</p>
 
           <div className="contact-layout">
             {/* Contact Info */}
@@ -66,14 +87,41 @@ const ContactPage = () => {
               <h2>Find me <span>↘</span></h2>
 
               <a href="mailto:iamhaseebmanzoor@gmail.com" className="contact-link">
-                <FiMail className="contact-icon" />
-                <span>iamhaseebmanzoor@gmail.com</span>
+                <span className="contact-icon-wrap"><FiMail className="contact-icon" /></span>
+                <div>
+                  <span className="contact-link-label">Email</span>
+                  <span className="contact-link-value">iamhaseebmanzoor@gmail.com</span>
+                </div>
               </a>
 
               <a href="tel:+923191140506" className="contact-link">
-                <FiPhone className="contact-icon" />
-                <span>+92 319 114 0506</span>
+                <span className="contact-icon-wrap"><FiPhone className="contact-icon" /></span>
+                <div>
+                  <span className="contact-link-label">Phone</span>
+                  <span className="contact-link-value">+92 319 114 0506</span>
+                </div>
               </a>
+
+              {/* Social Links */}
+              <div className="contact-socials">
+                <p className="contact-socials-label">Also find me on</p>
+                <div className="contact-social-row">
+                  {socialLinks.map((social, idx) => (
+                    <a
+                      key={idx}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="contact-social-btn"
+                      aria-label={social.label}
+                      title={social.label}
+                    >
+                      <span className="contact-social-icon">{social.icon}</span>
+                      {social.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Contact Form */}
@@ -127,12 +175,11 @@ const ContactPage = () => {
                 {isSubmitting ? 'Sending...' : 'Send'} <FiSend />
               </button>
 
-              {/* Success / Error Messages */}
               {submitStatus === 'success' && (
-                <p className="success-message">Message sent successfully!</p>
+                <p className="success-message">✅ Message sent successfully!</p>
               )}
               {submitStatus === 'error' && (
-                <p className="error-message">Something went wrong. Please try again.</p>
+                <p className="error-message">❌ Something went wrong. Please try again.</p>
               )}
             </form>
           </div>

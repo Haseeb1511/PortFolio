@@ -2,72 +2,59 @@ import Hero from '../components/Hero';
 import ProjectCard from '../components/ProjectCard';
 import { Link } from 'react-router-dom';
 import { getFeaturedProjects } from '../data/projects';
+import { FiArrowRight, FiCode, FiCpu, FiDatabase } from 'react-icons/fi';
 import './HomePage.css';
 
 const HomePage = () => {
     const featuredProjects = getFeaturedProjects();
 
+    const highlights = [
+        {
+            icon: <FiCpu />,
+            title: 'LLM Engineering',
+            desc: 'Fine-tuning, RAG systems, Agentic AI (LangChain, LangGraph, CrewAI, MCP)',
+        },
+        {
+            icon: <FiCode />,
+            title: 'MLOps & Deployment',
+            desc: 'Docker, FastAPI, MLflow, DVC, CI/CD with GitHub Actions on AWS',
+        },
+        {
+            icon: <FiDatabase />,
+            title: 'AI Infrastructure',
+            desc: 'Vector DBs (Pinecone, Weaviate, ChromaDB), AWS EC2/ECR/S3, PostgreSQL',
+        },
+    ];
+
     return (
         <div className="home-page">
             <Hero />
 
-            {/* About Preview Section */}
+            {/* About Teaser */}
             <section className="section about-preview" id="about">
                 <div className="container">
-                    <h2 className="section-title">About</h2>
-                    <div className="about-grid">
-                        <div className="about-info-card card">
-                            <h3>AI Engineer</h3>
-                            <p className="intro-text">
-                                I build intelligent, production-ready AI systems that scale—from research to deployment.
-                            </p>
+                    <p className="section-subtitle-light">Who I Am</p>
+                    <h2 className="section-title">Building AI That Ships</h2>
+                    <p className="about-teaser-text">
+                        I'm an AI Engineer focused on taking models from notebook to production.
+                        My stack spans the full AI lifecycle — from designing neural networks and
+                        fine-tuning LLMs to deploying scalable services on AWS.
+                    </p>
 
-                            <h4>Core Expertise</h4>
-                            <ul className="expertise-list">
-                                <li><strong>Machine Learning & AI:</strong> Deep Learning, NLP, Computer Vision, Generative AI</li>
-                                <li><strong>LLM Engineering:</strong> Fine-tuning, RAG systems, Agentic AI (LangChain, LangGraph)</li>
-                                <li><strong>MLOps & Deployment:</strong> Docker, FastAPI, MLflow, DVC, CI/CD with GitHub Actions</li>
-                                <li><strong>Cloud Infrastructure:</strong> AWS (EC2, ECR, S3, IAM)</li>
-                            </ul>
-
-                            <Link to="/about" className="btn btn-primary">
-                                Learn More
-                            </Link>
-                        </div>
-
-                        <div className="skills-column">
-                            <div className="skills-box">
-                                <h4>Skills</h4>
-                                <div className="skills-list">
-                                    <span className="skill-tag">Python</span>
-                                    <span className="skill-tag">Machine Learning</span>
-                                    <span className="skill-tag">Deep Learning</span>
-                                    <span className="skill-tag">NLP</span>
-                                    <span className="skill-tag">LangChain</span>
-                                    <span className="skill-tag">LangGraph</span>
-                                    <span className="skill-tag">AWS</span>
-                                </div>
+                    <div className="highlights-grid">
+                        {highlights.map((h, idx) => (
+                            <div key={idx} className="highlight-card card">
+                                <div className="highlight-icon">{h.icon}</div>
+                                <h3>{h.title}</h3>
+                                <p>{h.desc}</p>
                             </div>
+                        ))}
+                    </div>
 
-                            <div className="skills-box">
-                                <h4>MLOps</h4>
-                                <div className="skills-list">
-                                    <span className="skill-tag">MLflow</span>
-                                    <span className="skill-tag">Docker</span>
-                                    <span className="skill-tag">DVC</span>
-                                    <span className="skill-tag">GitHub Actions</span>
-                                </div>
-                            </div>
-
-                            <div className="skills-box">
-                                <h4>Backend & Cloud</h4>
-                                <div className="skills-list">
-                                    <span className="skill-tag">FastAPI</span>
-                                    <span className="skill-tag">Flask</span>
-                                    <span className="skill-tag">AWS (EC2, ECR, S3)</span>
-                                </div>
-                            </div>
-                        </div>
+                    <div className="view-more-container">
+                        <Link to="/about" className="btn btn-primary">
+                            More About Me <FiArrowRight />
+                        </Link>
                     </div>
                 </div>
             </section>
@@ -86,7 +73,7 @@ const HomePage = () => {
 
                     <div className="view-more-container">
                         <Link to="/projects" className="btn btn-primary view-more-btn">
-                            View All Projects
+                            View All Projects <FiArrowRight />
                         </Link>
                     </div>
                 </div>

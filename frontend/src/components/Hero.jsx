@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { FiInstagram, FiLinkedin, FiGithub, FiDownload, FiArrowDown } from 'react-icons/fi';
+import { FiInstagram, FiLinkedin, FiGithub, FiDownload, FiArrowDown, FiYoutube } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import { useEffect, useRef } from 'react';
 import './Hero.css';
@@ -48,37 +48,47 @@ const Hero = () => {
     }, []);
 
     const socialLinks = [
-        { icon: <FiInstagram />, url: 'https://www.instagram.com/haseebmanzoor_/' },
-        { icon: <FiLinkedin />, url: 'https://www.linkedin.com/in/haseeb-manzoor-839458252' },
-        { icon: <FiGithub />, url: 'https://github.com/Haseeb1511' },
-        { icon: <FaWhatsapp />, url: 'https://wa.me/923191140506' },
+        { icon: <FiInstagram />, url: 'https://www.instagram.com/haseebmanzoor_/', label: 'Instagram' },
+        { icon: <FiLinkedin />, url: 'https://www.linkedin.com/in/haseeb-manzoor-839458252', label: 'LinkedIn' },
+        { icon: <FiGithub />, url: 'https://github.com/Haseeb1511', label: 'GitHub' },
+        { icon: <FaWhatsapp />, url: 'https://wa.me/923191140506', label: 'WhatsApp' },
+        { icon: <FiYoutube />, url: 'https://www.youtube.com/@AIwithHaseeb1511', label: 'YouTube' },
     ];
 
     return (
         <section className="hero" id="home">
+            {/* Animated gradient mesh background */}
+            <div className="hero-bg">
+                <div className="hero-orb orb-1" />
+                <div className="hero-orb orb-2" />
+                <div className="hero-orb orb-3" />
+            </div>
+
             <div className="hero-container">
                 <div className="hero-content">
                     <div className="hero-text">
+                        <div className="hero-badge">👋 Available for hire</div>
                         <h1 className="hero-title">
-                            Hello I'm Haseeb. <span className="typed-text" ref={typedRef}></span>
+                            Hi, I'm <span className="hero-name">Haseeb.</span>
+                            <br />
+                            <span className="typed-text" ref={typedRef}></span>
                             <span className="cursor">|</span>
                         </h1>
                         <p className="hero-description">
-                            I'm an AI enthusiast interested in Generative AI. I work with Python, machine learning, deep
-                            learning, and MLOps, and I have experience with TensorFlow, Scikit-learn, and AWS. I enjoy
-                            building Chatbots using LangChain, LangGraph, and Agentic AI. I like solving tough problems
-                            and I'm always excited to learn more about AI.
+                            I engineer AI systems that go from research to production — building
+                            LLM-powered agents, RAG pipelines, and MLOps workflows that scale.
+                            Specialized in LangChain, LangGraph, AWS &amp; Agentic AI.
                         </p>
                         <div className="hero-buttons">
                             <a
                                 href="https://wa.me/923191140506?text=How%20can%20I%20help%20you%3F"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="btn btn-primary"
+                                className="btn btn-primary hero-cta"
                             >
                                 Hire Me!
                             </a>
-                            <a href="/assets/Haseeb_cv.pdf" className="btn btn-primary">
+                            <a href="/assets/Haseeb_cv.pdf" className="btn btn-outline hero-cta" download>
                                 Download CV <FiDownload />
                             </a>
                         </div>
@@ -90,18 +100,49 @@ const Hero = () => {
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="icon-box"
+                                    aria-label={social.label}
                                 >
                                     {social.icon}
                                 </a>
                             ))}
                         </div>
                     </div>
-                    {/* <div className="hero-image">
+
+                    {/* Profile Image */}
+                    <div className="hero-image">
                         <div className="image-wrapper">
-                            <img src="/assets/haseeb-ghibli.png" alt="Haseeb Ghibli-style portrait" />
+                            <div className="image-ring" />
+                            <img
+                                src="/assets/profile_pic/haseeb_image.jpg"
+                                alt="Haseeb Manzoor — AI Engineer"
+                            />
                         </div>
-                    </div> */}
+                    </div>
                 </div>
+
+                {/* Stats row */}
+                <div className="hero-stats">
+                    <div className="stat-item">
+                        <span className="stat-number">5+</span>
+                        <span className="stat-label">Projects Deployed</span>
+                    </div>
+                    <div className="stat-divider" />
+                    <div className="stat-item">
+                        <span className="stat-number">3+</span>
+                        <span className="stat-label">LLM Systems Built</span>
+                    </div>
+                    <div className="stat-divider" />
+                    <div className="stat-item">
+                        <span className="stat-number">2</span>
+                        <span className="stat-label">Certifications</span>
+                    </div>
+                    <div className="stat-divider" />
+                    <div className="stat-item">
+                        <span className="stat-number">1+</span>
+                        <span className="stat-label">Year Experience</span>
+                    </div>
+                </div>
+
                 <a href="#about" className="scroll-indicator">
                     <FiArrowDown className="scroll-icon" />
                     <span>Scroll Down</span>

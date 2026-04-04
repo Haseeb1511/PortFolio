@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { FiInstagram, FiLinkedin, FiGithub } from 'react-icons/fi';
+import { FiInstagram, FiLinkedin, FiGithub, FiYoutube } from 'react-icons/fi';
 import { FaWhatsapp } from 'react-icons/fa';
 import './Footer.css';
 
@@ -11,6 +11,7 @@ const Footer = () => {
         { icon: <FiLinkedin />, url: 'https://www.linkedin.com/in/haseeb-manzoor-839458252', label: 'LinkedIn' },
         { icon: <FiGithub />, url: 'https://github.com/Haseeb1511', label: 'GitHub' },
         { icon: <FaWhatsapp />, url: 'https://wa.me/923191140506', label: 'WhatsApp' },
+        { icon: <FiYoutube />, url: 'https://www.youtube.com/@AIwithHaseeb1511', label: 'YouTube' },
     ];
 
     const navLinks = [

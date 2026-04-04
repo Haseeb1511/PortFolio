@@ -24,19 +24,95 @@
 .contact-link {
     display: flex;
     align-items: center;
-    gap: 12px;
-    color: var(--muted-text);
+    gap: 14px;
+    color: var(--text);
     margin-bottom: 16px;
     transition: color 0.3s ease;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
 }
 
 .contact-link:hover {
+    border-color: var(--first-color);
     color: var(--first-color);
+}
+
+.contact-icon-wrap {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: rgba(14, 165, 233, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
 .contact-icon {
     font-size: 20px;
     color: var(--first-color);
+}
+
+.contact-link-label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--muted-text);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.contact-link-value {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+/* Social row */
+.contact-socials {
+    margin-top: 28px;
+}
+
+.contact-socials-label {
+    font-size: 0.82rem;
+    color: var(--muted-text);
+    font-weight: 500;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.contact-social-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.contact-social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    background: var(--card-bg);
+    color: var(--text);
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.25s ease;
+}
+
+.contact-social-btn:hover {
+    border-color: var(--first-color);
+    color: var(--first-color);
+    transform: translateY(-2px);
+}
+
+.contact-social-icon {
+    font-size: 16px;
 }
 
 /* Contact Form */
@@ -103,6 +179,16 @@
     margin-top: 16px;
     padding: 12px;
     background: rgba(16, 185, 129, 0.1);
+    border-radius: 8px;
+}
+
+.error-message {
+    text-align: center;
+    color: #ef4444;
+    font-weight: 500;
+    margin-top: 16px;
+    padding: 12px;
+    background: rgba(239, 68, 68, 0.1);
     border-radius: 8px;
 }
 

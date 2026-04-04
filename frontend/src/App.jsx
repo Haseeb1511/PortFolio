@@ -9,13 +9,12 @@ import ContactPage from './pages/ContactPage';
 import ExperiencePage from './pages/ExperiencePage';
 import CertificatesPage from './pages/CertificatesPage';
 import BlogPage from './pages/BlogPage';
-import BlogDetailPage from './pages/BlogDetailPage'; // Add this import
+import BlogDetailPage from './pages/BlogDetailPage';
+import BackToTop from './components/BackToTop';
 import './index.css';
 import ChatbotWidget from "./components/ChatbotWidget";
 
 function App() {
-  console.log('App component rendering'); // Debug log
-
   return (
     <ThemeProvider>
       <Router>
@@ -28,7 +27,7 @@ function App() {
             <Route path="/experience" element={<ExperiencePage />} />
             <Route path="/certificates" element={<CertificatesPage />} />
             <Route path="blog" element={<BlogPage />} />
-            <Route path="blog/:id" element={<BlogDetailPage />} /> {/* Add this route */}
+            <Route path="blog/:id" element={<BlogDetailPage />} />
             <Route path="contact" element={<ContactPage />} />
           </Route>
         </Routes>
@@ -36,10 +35,9 @@ function App() {
 
       {/* Chatbot Widget added globally */}
       <ChatbotWidget />
+      <BackToTop />
     </ThemeProvider>
   );
 }
 
 export default App;
-
-
