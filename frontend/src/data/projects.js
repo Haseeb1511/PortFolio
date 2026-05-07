@@ -16,7 +16,7 @@ Key Technical Implementations:
 - **Dual Memory Architecture**: Implements a conversation summary node for Short-Term Memory (STM) and Supabase pgvector for persistent Long-Term Memory (LTM) across sessions.
 - **Real-time Streaming & SaaS Ready**: Features real-time SSE token streaming, JWT-based secure user authentication, and tenant isolation for production readiness.`,
     images: [
-      "https://www.youtube.com/embed/W9g9SPKEGOA",
+      // "https://www.youtube.com/embed/W9g9SPKEGOA",
       "/assets/projects/medvision-ai/cover.png",
       "/assets/projects/medvision-ai/1.png",
       "/assets/projects/medvision-ai/3.png",
@@ -51,7 +51,7 @@ Key Technical Implementations:
     "description": "An advanced legal AI assistant featuring an end-to-end voice pipeline, corrective RAG with hybrid retrieval, and agentic workflows.",
     "fullDescription": "A sophisticated Legal AI Agent designed to answer complex queries by retrieving and synthesizing information from legal documents. Built with a focus on accuracy and user experience, it employs a state-of-the-art RAG pipeline and a responsive voice interface.\n\nKey Technical Implementations:\n- **End-to-End Voice Pipeline**: Implemented a seamless voice interaction system. Audio is recorded on the frontend with waveform visualization, transcribed using OpenAI Whisper (STT), and responses are read back using OpenAI TTS (Text-to-Speech), enabling a complete hands-free experience.\n- **Advanced RAG Architecture**: Features a Hybrid Retrieval system combining BM25 (keyword search) and Dense Vector Search (semantic search) via Reciprocal Rank Fusion (RRF) for high-fidelity retrieval.\n- **Corrective RAG (CRAG)**: Integrating a self-correcting mechanism where retrieved documents are graded for relevance by an LLM. If confidence is low, the system autonomously transforms the query and retries retrieval, ensuring high answer quality.\n- **Agentic Workflow**: Powered by LangGraph, the system functions as a state machine with specialized nodes for document ingestion, query rewriting (for follow-up context), retrieval grading, and summarization to handle long context windows efficiently.\n- **Real-time Streaming**: Full server-sent events (SSE) implementation for token-by-token streaming of text and audio responses.",
     "images": [
-      "https://www.youtube.com/embed/agc7DJ01wVM",
+      // "https://www.youtube.com/embed/agc7DJ01wVM",
       "/assets/projects/qanoon-ai/cover.png",
       "/assets/projects/qanoon-ai/backend_deploy.png",
       "/assets/projects/qanoon-ai/graph.png",
